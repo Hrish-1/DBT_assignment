@@ -1,0 +1,5 @@
+Q1. Does ANSI recognize the data type DATE?
+A : Yes, ANSI recognizes the datatype DATE.
+
+Q2. Which subdivision of SQL is used to insert values in tables?
+A : DML (Data Manipulation Language) of SQL subdivision is used to insert values into a table.
