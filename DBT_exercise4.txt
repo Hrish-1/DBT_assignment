@@ -25,7 +25,8 @@
 7. Display the maximum Quantity sold for each part, provided the maximum Quantity
 is greater than 800.
 
->	select qty,`P#` from spj where qty in (select max(qty) from spj group by `P#`) and qty > 800;		
+>	select qty,`P#` from spj where qty in (select max(qty) from spj group by `P#`) and qty > 800;
+>	 select max(qty),`P#` from spj group by `P#` having max(qty) > 800;		
 
 8. Display the Status and the count of Suppliers with that Status.
 
