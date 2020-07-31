@@ -25,18 +25,20 @@ for which the sum of the cubes of the digits equal the number itself.
 		begin
 			declare x int default 1;
 			declare a int;
+			declare r int default 0;
+			declare s default 0;
 			while x <= 999 do
 			    set a = x;
 				while a > 0 do
-				    declare r int default 0;
-				    declare sum default 0;
 					set r = mod(a,10);
-					sum = sum + pow(a,3);
-					set a = a / 10;
+					s = s + pow(r,3);
+					set a = floor(a / 10);
 				end while;
 				if sum = x then 
 					insert into tempp values(concat(x,"is an armstrong number"));
 				set x = x + 1;
+				set r = 0;
+				set sum = 0;
 			end while;
 		end; //
 	delimiter ; 
@@ -91,3 +93,4 @@ determine whether it is a palindrome.
 requires determining how many characters are read in.
 
 >	
+
