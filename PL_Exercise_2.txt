@@ -1,0 +1,86 @@
+
+MySQL
+Exercise 2
+1. Select from any table a number and determine whether it is within a given range (for
+example, between 1 and 10).
+
+>	delimiter //
+		create procedure range1(a int,b int)
+		begin
+		    declare x int;
+		    declare r varchar(50);
+			select sal into x from emp where ename = 'D';
+			if x between a and b then
+				set r = concat(x," is within the given range ",a," and ",b);
+				insert into tempp values (r);
+			else
+				set r = concat(x," is not within the given range ",a," and ",b);
+				insert into tempp values (r);
+			end if;
+		end; //
+	delimiter ;
+
+2. Select from any table three positive integers representing the sides of a triangle, and
+determine whether they form a valid triangle. Hint: In a triangle, the sum of any two
+sides must always be greater than the third side.
+
+> delimiter //
+ 		create procedure triangle(a int,b int,c int)
+ 		begin
+ 			 declare x int;
+ 			 declare y int;
+ 			 declare z int;
+ 			 select sal into x from emp where empno = a;
+ 			 select sal into y from emp where empno = b;
+ 			 select sal into z from emp where empno = c;
+
+ 			 if (x + y) > z and (x + z) > y and (z + y) > x then
+ 			 	insert into tempp values ("Triangle is valid");
+ 			 else
+ 			 	insert into tempp values ("Triangle is not valid");
+ 		     end if;
+ 		end; //
+ 		delimiter ;
+
+
+3. Check if a given a year is a leap year. The condition is:- year should be (divisible by 4
+and not divisible by 100) or (divisible by 4 and divisible by 400.). The year should be
+Selected from some table.
+
+>	delimiter //
+		create procedure leap()
+		begin
+			declare res date;
+			select odate into res from orders_copy where onum = 3002;
+			if (year(res) % 4 = 0 and year(res) % 100 != 0) or (year(res) % 4 = 0 and year(res) % 400 = 0) then
+				insert into tempp values(concat(year(res)," is a leap year"));
+			else
+			  	insert into tempp values(concat(year(res)," is not a leap year"));
+			 end if;
+
+	delimiter ;
+
+4. Write a program that Selects from any table two character strings. Your program should
+then determine if one character string exists inside another character string.
+
+>			create table str1(num int,Name varchar(20)); 
+			insert into str1 values (1,'adi'),(2,'hrishi'),(3,'adinath'),(4,'hrishikesh');
+			select * from str1;
+			delimiter //
+			create procedure checkst1(s1 int,s2 int)
+			begin
+					declare x varchar(20);
+			        declare y varchar(20);
+			        declare z varchar(50);
+			        declare w varchar(50);
+			        select name into x from str1 where num = s1;
+			        select name into y from str1 where num = s2;
+			        set z = concat('%',x,'%');
+			         set w = concat('%',y,'%');
+			        if  (y like z) or (x like w) then
+							insert into tempp values("String Exits inside another string");
+					else
+							insert into tempp values("String does not exits in another String");
+					end if;
+			end; //
+			delimiter ;

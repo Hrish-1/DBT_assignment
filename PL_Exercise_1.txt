@@ -1,0 +1,105 @@
+MySQL
+Exercise 1
+1. Write a program that computes the perimeter and the area of a rectangle. Define
+your own values for the length and width. (Assuming that L and W are the length
+and width of the rectangle, Perimeter = 2*(L+W) and Area = L*W.
+
+>	delimiter //
+	create procedure area(x float(4,2),y float(4,2))
+	begin
+		declare area float(4,2);
+	    declare perimeter float(4,2);
+	    set area = x * y;
+	    set perimeter = 2 * (x + y);
+	    insert into tempp values(area,perimeter);
+	end; //
+delimiter ;
+
+2. Write a program that declares an integer variable called num, assigns a value to it,
+and computes and inserts into the tempp table the value of the variable itself, its
+square, and its cube.
+
+>	delimiter //
+		create procedure exp(num int(4))
+		begin
+			 declare square int;
+			 declare cube1 int;
+			 set square = pow(num,2);
+			 set cube1 = pow(num,3);
+			 insert into tempp(val,square,cube1) values(num,square,cube1);
+	    end; //
+    delimiter ;	
+
+3. Convert a temperature in Fahrenheit (F) to its equivalent in Celsius (C) and vice
+versa. The required formulae are:- C= (F-32)*5/9
+F= 9/5*C + 32
+
+>	delimiter //
+		create procedure temperature(v int,x char)
+		begin
+				declare fah int;
+                declare cel int;
+            case
+				when x = 'F' then
+					set fah = (9 / 5 * v) + 32;
+					insert into tempp values(v,fah);
+				when x = 'C' then
+					set cel = (v - 32) * (5 / 9);
+					insert into tempp values(cel,v);
+			else 
+				begin
+				end;
+			end case;
+		end; //
+	delimiter ;
+
+4. Convert a number of inches into yards, feet, and inches. For example, 124 inches
+equals 3 yards, 1 foot, and 4 inches.
+
+>	   delimiter //
+			create procedure measurement(num float(7,2))
+			begin 
+				declare y float(7,2);
+				declare f int;
+				declare i int;
+				set y = num/36;
+				set f = num/12;
+				set i = mod(num,12);
+				insert into tempp values(num,y,f,i);
+			end; //
+       delimiter ;
+
+
+5. Write a program that enables a user to input an integer. The program should then
+state whether the integer is evenly divisible by 5.
+
+>	delimiter //
+			create procedure divs(num int)
+			begin
+				if mod(num,5) = 0 then
+					insert into tempp values(num,'is divisible by 5');
+				elseif mod(num,5) != 0 then
+					insert into tempp values(num,'is not divisible by 5');
+				end if;
+			end; //
+	delimiter ;
+
+6. Your block should read in two real numbers and tell whether the product of the two
+numbers is equal to or greater than 100.
+
+>	delimiter //
+		create procedure prod(x int,y int)
+		begin
+			declare result int;
+            declare z varchar(30);
+			set result = x * y;
+			if result > 100 then
+				set z = concat(result," is greater than 100");
+				insert into tempp values (z);
+			elseif result = 100 then
+				set z = concat(result," is equal to 100");
+				insert into tempp values (z);
+			end if;
+		end ; //
+delimiter ;
+
